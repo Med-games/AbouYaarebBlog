@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ausmhc5smhi_zq+v2o%ys+v=1(lwr4tn#eutig=c9k9ys4915g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['medstudios.pythonanywhere.com']
 
 
 # Application definition
@@ -122,12 +122,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-#enregister static file to all the project nigga
+STATIC_URL = '/static/'
+#enregister static file to all the project
 '''
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,"static"),
-    'C:\Django\Blogger\src\my_blog\static',
+    os.path.join(BASE_DIR,"blog/static"),
+    '/home/MedStudios/AbouYaarebBlog/Blogger/my_blog/blog/static/blog',
 ]
 '''
 # Default primary key field type
@@ -149,6 +149,3 @@ EMAIL_HOST_PASSWORD='ifgs dbab mfsa orzh'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
-ALLOWED_HOSTS=[]
-
-
