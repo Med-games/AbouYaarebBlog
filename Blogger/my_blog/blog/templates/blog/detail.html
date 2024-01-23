@@ -12,7 +12,7 @@
         </div>
         {% endif %}
         <h3 class="title-of-title">{{ post.title }}</h3>
-        <p>{{ post.content }}</p>
+        <p>{{ post.content | safe  }}</p>
     </div>
     <h2 class="border-bottom mt-5 mb-3">التعليقات ({{ comments.count }})</h2>
     {% if comments %}
@@ -27,11 +27,12 @@
             <h5 class="mb-0">لا يوجد تعليقات</h5>
         </div>
     {% endif %}
-    {% if user.is_authenticated   %}
+    {% if user.is_authenticated  %}
     <h3 class="border-bottom pb-3 mb-3 mt-5">اضافة تعليق جديد</h3>
     <form method="POST" action="">
         {% csrf_token %}
-        {{comment_form|crispy}}
+        <input type="hidden" name="{{ comment_form.name.name }}" value="{{ comment_form.name.value }}">
+        {{comment_form.body|as_crispy_field}}
         <input class="btn btn-secondary mb-4" type="submit" value="نشر التعليق">
     </form>
     {% endif %}

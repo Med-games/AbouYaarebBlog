@@ -25,8 +25,7 @@ class Post(models.Model):
         ordering=('-post_date',)
 
 class Comment(models.Model):
-    name=models.CharField(max_length=100, verbose_name='الاسم')
-    email=models.EmailField(verbose_name='البريد الالكتروتي')
+    name=models.CharField(max_length=100, verbose_name='الاسم',default='مجهول')
     body=models.TextField(verbose_name='التعليق')
     comment_date=models.DateTimeField(auto_now=True)
     active=models.BooleanField(default=True)

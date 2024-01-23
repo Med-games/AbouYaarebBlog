@@ -4,7 +4,8 @@ from .models import Comment,Post,video
 class NewComment(forms.ModelForm):
     class Meta:
         model=Comment
-        fields=('name','email','body')
+        fields=['name','body']
+        name = forms.CharField(widget=forms.HiddenInput(), required=False)
 class PostCreateForm(forms.ModelForm):
     title=forms.CharField(label='عنوان التدويتة')
     content=forms.CharField(label='النص',widget=forms.Textarea)
