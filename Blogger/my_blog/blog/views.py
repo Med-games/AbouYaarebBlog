@@ -5,6 +5,9 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.generic import CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.db.models import Q
+from django.http import JsonResponse
+import csv
+
 
      
 def video_list(request):
@@ -31,7 +34,7 @@ def home(request):
     posts = Post.objects.all()
     if query:
         posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))
-    paginator=Paginator(posts,2)
+    paginator=Paginator(posts,10)
     page=request.GET.get('page')
     try:
         posts=paginator.page(page)
@@ -47,7 +50,6 @@ def home(request):
 
 def about(request):
     return render(request,'blog/about.html',{'title':'من انا'})
-
 
 def post_detail(request,post_id):
     post=get_object_or_404(Post,pk=post_id)
@@ -69,6 +71,42 @@ def post_detail(request,post_id):
     else:
         comment_form=NewComment()
     return render(request,'blog/detail.html',context)
+
+def create_post_via_view(request):
+    try:
+        with open('/home/med/Documents/python/output.csv', 'r', encoding='utf-8') as file:
+            csv_reader = csv.reader(file)
+                
+            for row in csv_reader:
+                if len(row) >= 2:
+                    title = row[0].strip()
+                    content = row[1].strip()
+                    # Create a dictionary with the data for the form
+                    data = {'title': title, 'content': content}
+
+                    # Create an instance of the form with the provided data
+                    form = PostCreateForm(data)
+
+                    # Check if the form is valid
+                    if form.is_valid():
+                        # Create a Post instance but don't save it yet
+                        post_instance = form.save(commit=False)
+
+                        # Set the author to the current user
+                        post_instance.author = request.user
+
+                        # Save the Post instance
+                        post_instance.save()
+                    else:
+                        # Print or log the errors if the form is not valid
+                        print(f"Error creating post: {form.errors}")
+
+            # Return a JSON response indicating success
+            return JsonResponse({'status': 'success', 'message': 'Posts created successfully from CSV'})
+    except Exception as e:
+        # Return a JSON response indicating failure with the error message
+        return JsonResponse({'status': 'error', 'message': f'Error: {str(e)}'})
+    
 class POstCreateView(LoginRequiredMixin,CreateView):
      model=Post
      #fields=['title','content']

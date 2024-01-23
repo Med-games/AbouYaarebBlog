@@ -8,7 +8,6 @@ urlpatterns=[
     path('detail/<slug:pk>/update/',views.POstUpdateView.as_view(), name='update_post'),
     path('detail/<slug:pk>/delete/',views.PostDeleteView.as_view(), name='delete_post'),
     path('video/',views.video_list,name='video'),
-    
-
+    path('create-post', views.create_post_via_view, name='create_post'),
 
 ]
