@@ -51,6 +51,9 @@ html,body{
 }
 .btn{border-radius: 12px;}
 
+.main-body strong{
+    display: block!important;
+}
 
 
 

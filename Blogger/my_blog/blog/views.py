@@ -75,13 +75,14 @@ def post_detail(request,post_id):
 
 def create_post_via_view(request):
     try:
-        with open('/home/med/Documents/python/output.csv', 'r', encoding='utf-8') as file:
+        with open('/home/med/Documents/python/data.csv', 'r', encoding='utf-8') as file:
             csv_reader = csv.reader(file)
                 
             for row in csv_reader:
-                if len(row) >= 2:
+                if len(row) >= 3:
                     title = row[0].strip()
-                    content = row[1].strip()
+                    content = row[1]
+                    date = row[2].strip()
                     # Create a dictionary with the data for the form
                     data = {'title': title, 'content': content}
 
@@ -95,7 +96,9 @@ def create_post_via_view(request):
 
                         # Set the author to the current user
                         post_instance.author = request.user
-
+                        new_date = convert_date(date)
+                        if new_date != None: 
+                            post_instance.post_date = new_date 
                         # Save the Post instance
                         post_instance.save()
                     else:
@@ -107,7 +110,42 @@ def create_post_via_view(request):
     except Exception as e:
         # Return a JSON response indicating failure with the error message
         return JsonResponse({'status': 'error', 'message': f'Error: {str(e)}'})
-    
+
+
+from datetime import datetime
+
+def convert_date(arabic_date):
+    # Define a dictionary to map Arabic month names to their English counterparts
+    arabic_to_english_month = {
+        'يناير': 'January',
+        'فبراير': 'February',
+        'مارس': 'March',
+        'إبريل': 'April',
+        'مايو': 'May',
+        'يونيو': 'June',
+        'يوليو': 'July',
+        'أغسطس': 'August',
+        'سبتمبر': 'September',
+        'أكتوبر': 'October',
+        'نوفمبر': 'November',
+        'ديسمبر': 'December',
+    }
+
+    # Replace Arabic month names with English month names
+    for arabic_month, english_month in arabic_to_english_month.items():
+        arabic_date = arabic_date.replace(arabic_month, english_month)
+
+    # Parse the date using the updated string, including the Arabic comma
+    formatted_date = None
+
+    try:
+        parsed_date = datetime.strptime(arabic_date, "%d %B، %Y")
+        formatted_date = parsed_date.strftime("%Y-%m-%d")
+    except ValueError as e:
+        print(f"Error: {e}")
+
+    return formatted_date
+          
 class POstCreateView(LoginRequiredMixin,CreateView):
      model=Post
      #fields=['title','content']

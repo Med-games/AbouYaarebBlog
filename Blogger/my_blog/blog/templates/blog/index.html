@@ -17,7 +17,7 @@
       <h3><a href="{% url 'detail' post.id %}" class="text-dark title-of-title">{{post.title}}</a></h3>
 
       {% if post.content|length > 200 %}
-        <p>{{ post.content|slice:":150"| safe}}{% if post.content|length > 10 %}...{% endif %}</p>
+        <p>{{ post.content|striptags|slice:":150"}}{% if post.content|length > 10 %}...{% endif %}</p>
         <button class="btn btn-secondary" onclick="showFullContent('{{ post.content|escapejs }}')" ><a href=" {% url 'detail' post.id %} " class="text-dark">اقرأ المزيد </a></button>
         <div id="postContent{{ post.id }}" style="display: none;">{{ post.content }}</div>
       {% else %}
