@@ -23,7 +23,7 @@
         <!-- start navbar-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">
-                <img src="{% static 'blog/images/min-logo.png'%}" alt="" width="45px" >
+                <img src="{% static 'blog/images/HDLOGO.png'%}" alt="" width="45px" >
                 مدونة</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
@@ -35,10 +35,10 @@
                   <a class="nav-link" href="{% url 'home'  %}">الرئيسية </a>
                 </li>
                 <li class="nav-item {% if current_page == 'video' %}active{% endif %} m-3">
-                  <a class="nav-link" href="{% url 'video' %}">رابط</a>
+                  <a class="nav-link" href="{% url 'video' %}">فيديوهات</a>
                 </li>
                 <li class="nav-item {% if current_page == 'about' %}active{% endif %} m-3">
-                    <a href="{% url 'about'%}" class="nav-link"> من انا</a>
+                    <a href="{% url 'about'%}" class="nav-link"> من هو أبو يعرب المرزوقي</a>
                 </li>
                 <li class="nav-item mx-auto m-3">
                     <form action="{% url 'home'  %}" method="get">
@@ -103,9 +103,9 @@
                 <div class="col-md">
                     <div class="card-group m-3">
                         <div class="card m-3">
-                            <h3 class="title text-center border-bottom m-3 p-2"> من انا</h3>
+                            <h3 class="title text-center border-bottom m-3 p-2"> من هو أبو يعرب المرزوقي</h3>
                                 <div class="card-body text-center">
-                                    <img src="{% static 'blog/images/min-logo.png' %}" alt="" width="100px">
+                                    
                                 </div>
                                 
 
