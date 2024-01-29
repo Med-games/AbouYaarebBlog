@@ -7,10 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.db.models import Q
 from django.http import JsonResponse
 import csv
+from django.urls import resolve
 
 
-     
 def video_list(request):
+    current_page = resolve(request.path_info).url_name     
     videos = video.objects.all()
     paginator = Paginator(videos, 1)
     page = request.GET.get('page', 1)  # Default to page 1 if not specified
@@ -26,10 +27,12 @@ def video_list(request):
     context = {
         'videos': videos,
         'form': form,
+        'current_page':current_page,
     }
 
     return render(request, 'blog/video.html', context)
 def home(request):
+    current_page = resolve(request.path_info).url_name     
     query = request.GET.get('post_search')
     posts = Post.objects.all()
     if query:
@@ -44,12 +47,14 @@ def home(request):
          posts=paginator.page(paginator.num_page)       
     context={'title':'الصفحة ',
              'posts':posts,
-             'page':page,}
+             'page':page,
+             'current_page':current_page}
     return render(request,'blog/index.html',context)
 
 
 def about(request):
-    return render(request,'blog/about.html',{'title':'من انا'})
+    current_page = resolve(request.path_info).url_name     
+    return render(request,'blog/about.html',{'title':'من انا','current_page':current_page})
 
 def post_detail(request,post_id):
     post=get_object_or_404(Post,pk=post_id)
