@@ -1,8 +1,22 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+    .post {
+      background-color: #fff;
+      box-shadow: 0 5px 25px rgba(1 1 1 / 20%);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 15px;
+      transition: 0.7s ease;
+    }
+  
+    .post:hover {
+      background-color: #dedada;
+    }
+  </style>
 {% load crispy_forms_tags %}  
-    <div class="border p-3 mb-4">
+    <div class="border p-3 mb-4 post">
         <img class="img-fluid rounded-circle" width="70px" src="{{post.author.profile.image.url}}" alt="">
         <span class="text-secondary">نشر في تاريخ {{ post.post_date|date:'d-m-Y' }}</span>
         {% if post.author == user  %}

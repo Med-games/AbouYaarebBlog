@@ -17,13 +17,38 @@
 
 
     <title>Abu Yarreb</title>
+    <style>
+        .btn-actv .actv{
+            background-color: #17a2b8 !important ;
+            border-radius: 12px;
+            color: white !important;
+        }
+        .active:hover{
+            background-color: #17a2b8 !important ;
+            border-radius: 12px;
+            color: white !important;
+            transition: 0.7s ease;
+            transform: scale(1.1);
+
+
+        }
+        .btn-log{
+            background-color: #ff8c00 !important;
+            color: white !important;
+            border-color: transparent;
+        }
+        .btn-log:hover{
+            background-color: white !important;
+            color: #ff8c00 !important;
+            border-color: transparent;
+
+        }
+
+    </style>
 </head>
 <body>
     <header>
         <!-- start navbar-->
-        <div>
-            <img src="{% static 'blog/images/HDLOGO.png'%}" alt="" width="150px" style="left: 50%;" >
-        </div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">
                 <img src="{% static 'blog/images/HDLOGO.png'%}" alt="" width="45px" >
@@ -34,18 +59,18 @@
           
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ">
-                <li class="nav-item {% if current_page == 'home' %}active{% endif %} m-3">
-                  <a class="nav-link" href="{% url 'home'  %}">الرئيسية </a>
+                <li class="nav-item  {% if current_page == 'home' %}btn-actv active{% endif %}active m-3">
+                  <a class="nav-link actv" href="{% url 'home'  %}">الرئيسية </a>
                 </li>
-                <li class="nav-item {% if current_page == 'video' %}active{% endif %} m-3">
-                  <a class="nav-link" href="{% url 'video' %}">فيديوهات</a>
+                <li class="nav-item {% if current_page == 'video' %} btn-actv active{% endif %}active m-3">
+                  <a class="nav-link actv" href="{% url 'video' %}">فيديوهات</a>
                 </li>
-                <li class="nav-item {% if current_page == 'about' %}active{% endif %} m-3">
-                    <a href="{% url 'about'%}" class="nav-link"> من هو أبو يعرب المرزوقي</a>
+                <li class="nav-item {% if current_page == 'about' %} btn-actv active{% endif %}active m-3">
+                    <a href="{% url 'about'%}" class="nav-link actv"> من هو أبو يعرب المرزوقي</a>
                 </li>
                 <li class="nav-item mx-auto m-3">
                     <form action="{% url 'home'  %}" method="get">
-                    <div class="input-group">
+                    <div class="input-group ">
                         <button type="submit" class="btn btn-info "  data-mdb-ripple-init>بحث</button>
                         <input type="search" class="form-control rounded" placeholder="بحث" aria-label="Search" aria-describedby="search-addon" name="post_search" />
                       </div>
@@ -63,8 +88,8 @@
             </ul>
               {% else %}
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item"> <a href="{% url 'login' %}" class='nav-link btn btn-secondary m-3 text-light'>تسجيل دخول</a></li>
-                <li class="nav-item"> <a href="{% url 'register' %}"  class='nav-link btn btn-secondary m-3 text-light'>تسجيل </a></li>
+                <li class="nav-item "> <a href="{% url 'login' %}" class='nav-link btn btn-secondary m-3  btn-log'>تسجيل دخول</a></li>
+                <li class="nav-item "> <a href="{% url 'register' %}"  class='nav-link btn btn-secondary m-3  btn-log'>تسجيل </a></li>
             </ul>
 
 
