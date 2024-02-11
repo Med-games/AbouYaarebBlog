@@ -54,6 +54,14 @@ html,body{
 .main-body strong{
     display: block!important;
 }
-
+.post{
+    overflow: hidden !important ;
+    border-radius: 10px ;
+    margin: 20px ;
+    transition: 0.7s ease !important;
+}
+.post:hover {
+    transform: scale(1.1) !important;
+ }
 
 

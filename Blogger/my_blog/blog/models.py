@@ -16,6 +16,9 @@ class Post(models.Model):
     post_date=models.DateTimeField(default=timezone.now)
     Post_update=models.DateTimeField(auto_now=True)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
+    likes=models.ManyToManyField(User,related_name='blog_posts')
+    def total_likes(self):
+        return self.likes.count()
 
     def __str__(self) -> str:
         return self.title

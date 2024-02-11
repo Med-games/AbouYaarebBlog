@@ -27,6 +27,11 @@
         {% endif %}
         <h3 class="title-of-title">{{ post.title }}</h3>
         <p>{{ post.content | safe  }}</p>
+        <form method="post" action="{% url 'like_post' post.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{ post.id }}">
+            <button type="submit" class="btn btn-primary btn-sm">اعجاب <small> {{total_likes}}</small></button>
+        </form>
     </div>
     <h2 class="border-bottom mt-5 mb-3">التعليقات ({{ comments.count }})</h2>
     {% if comments %}

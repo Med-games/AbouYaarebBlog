@@ -5,10 +5,24 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.generic import CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.db.models import Q
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponseRedirect
+from django.urls import reverse 
 import csv
 from django.urls import resolve
+def like_view(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    user = request.user
 
+    # Check if the user has already liked the post
+    if user in post.likes.all():
+        # If the user has already liked the post, remove their like
+        post.likes.remove(user)
+    else:
+        # If the user hasn't liked the post, add their like
+        post.likes.add(user)
+
+    # Redirect back to the post detail page after toggling the like
+    return HttpResponseRedirect(reverse('detail', args=[pk]))
 
 def video_list(request):
     current_page = resolve(request.path_info).url_name     
@@ -61,10 +75,13 @@ def post_detail(request,post_id):
     comments=post.comments.filter(active=True)
     comment_form=NewComment()
     New_Comment=None
+    total_likes = post.total_likes()
+
     context={'title':post,
             'post':post,
             'comments':comments,
             'comment_form':comment_form,
+            'total_likes':total_likes
             }
     if request.method=='POST':
         comment_form=NewComment(data=request.POST)

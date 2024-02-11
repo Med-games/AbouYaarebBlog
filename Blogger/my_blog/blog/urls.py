@@ -9,5 +9,7 @@ urlpatterns=[
     path('detail/<slug:pk>/delete/',views.PostDeleteView.as_view(), name='delete_post'),
     path('video/',views.video_list,name='video'),
     path('create-post', views.create_post_via_view, name='create_post'),
+    path('like/<int:pk>/', views.like_view, name='like_post'),
+
 
 ]
