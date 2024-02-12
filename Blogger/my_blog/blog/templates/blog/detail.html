@@ -27,11 +27,13 @@
         {% endif %}
         <h3 class="title-of-title">{{ post.title }}</h3>
         <p>{{ post.content | safe  }}</p>
-        <form method="post" action="{% url 'like_post' post.pk %}">
+        {% if user.is_authenticated  %}
+        <form id="like_form" method="post" action="{% url 'like_post' post.pk %}">
             {% csrf_token %}
             <input type="hidden" name="post_id" value="{{ post.id }}">
-            <button type="submit" class="btn btn-primary btn-sm">اعجاب <small> {{total_likes}}</small></button>
+            <button type="button" id="like_button" class="btn btn-primary btn-sm">اعجاب <small> {{total_likes}}</small></button>
         </form>
+        {% endif %}
     </div>
     <h2 class="border-bottom mt-5 mb-3">التعليقات ({{ comments.count }})</h2>
     {% if comments %}
@@ -55,5 +57,26 @@
         <input class="btn btn-secondary mb-4" type="submit" value="نشر التعليق">
     </form>
     {% endif %}
-
+    <script>
+        document.getElementById('like_button').addEventListener('click', function() {
+            var form = document.getElementById('like_form');
+            var formData = new FormData(form);
+    
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the total likes count
+                document.getElementById('like_button').innerHTML = 'اعجاب <small>' + data.total_likes + '</small>';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
 {% endblock %}
