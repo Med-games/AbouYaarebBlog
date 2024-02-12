@@ -41,6 +41,7 @@ def video_list(request):
         videos = paginator.page(paginator.num_pages)
 
     context = {
+        'title' : 'فيديوهات',
         'videos': videos,
         'form': form,
         'current_page':current_page,
@@ -61,7 +62,7 @@ def home(request):
             posts=paginator.page(1)
     except EmptyPage:
          posts=paginator.page(paginator.num_page)       
-    context={'title':'الصفحة ',
+    context={'title':'الرئيسية',
              'posts':posts,
              'page':page,
              'current_page':current_page}
@@ -70,7 +71,7 @@ def home(request):
 
 def about(request):
     current_page = resolve(request.path_info).url_name     
-    return render(request,'blog/about.html',{'title':'من انا','current_page':current_page})
+    return render(request,'blog/about.html',{'title':'من هو أبو يعرب المرزوقي','current_page':current_page})
 
 def post_detail(request,post_id):
     post=get_object_or_404(Post,pk=post_id)
