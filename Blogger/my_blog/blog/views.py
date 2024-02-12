@@ -20,9 +20,11 @@ def like_view(request, pk):
     else:
         # If the user hasn't liked the post, add their like
         post.likes.add(user)
+    # Get the updated total likes count
+    total_likes = post.likes.count()
 
-    # Redirect back to the post detail page after toggling the like
-    return HttpResponseRedirect(reverse('detail', args=[pk]))
+    # Return JSON response with the updated total likes count
+    return JsonResponse({'total_likes': total_likes})
 
 def video_list(request):
     current_page = resolve(request.path_info).url_name     
