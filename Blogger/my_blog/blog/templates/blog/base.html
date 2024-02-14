@@ -161,7 +161,10 @@
             </div>
         </div>
   <!-- Add the form for creating a post -->
-
+   <!--  <form method="post" action="{% url 'create_post' %}">
+    {% csrf_token %}
+    <button type="submit">Create Post</button>
+    </form>-->
     </footer>
         <script src="{% static 'blog/js/jquery-3.3.1.slim.min.js' %}"></script>
         <script src="{% static 'blog/js/popper.min.js' %}"></script>

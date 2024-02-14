@@ -29,15 +29,15 @@ def register(request):
 
             messages.success(request, f'لقد تمت عملية التسجيل بنجاح {new_user} مرحبا ')
             welcome_message = 'مرحبًا بكم في صفحة الدكتور ابو يعرب المروزقي'
-            email = cleaned_email  
+            #email = cleaned_email  
 
-            send_mail(
-                'الدكتور ابو يعرب المروزقي',
-                welcome_message,
-                settings.EMAIL_HOST_USER,
-                [email],
-                fail_silently=False,
-            )
+            #send_mail(
+             #   'الدكتور ابو يعرب المروزقي',
+              #  welcome_message,
+               # settings.EMAIL_HOST_USER,
+                #[email],
+                #fail_silently=False,
+            #)
 
             return redirect('login')
 

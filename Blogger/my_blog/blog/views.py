@@ -146,6 +146,7 @@ def convert_date(arabic_date):
         'فبراير': 'February',
         'مارس': 'March',
         'إبريل': 'April',
+        'أبريل':'April', # Add this line to handle the case where the Arabic letter 'إ' is replaced with 'أ
         'مايو': 'May',
         'يونيو': 'June',
         'يوليو': 'July',
