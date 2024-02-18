@@ -17,7 +17,7 @@
   </style>
 {% load crispy_forms_tags %}  
     <div class="border p-3 mb-4 post">
-        <img class="img-fluid rounded-circle" width="70px" src="{{post.author.profile.image.url}}" alt="">
+        <img class="img-fluid rounded-circle" width="70px" src="{% static 'blog/images/default.png'%}" alt="">
         <span class="text-secondary">نشر في تاريخ {{ post.post_date|date:'d-m-Y' }}</span>
         {% if post.author == user  %}
         <div class="form-group btn-editing p-3 "  style="position: absolute; top:0; left: 0;">

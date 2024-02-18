@@ -13,7 +13,7 @@
         <div class="col-md-3 text-center">
             {% if user.is_authenticated %}
                 {% if  user.email == 'abu-yaareb@moudawna.com' %}
-                    <img class="img-fluid rounded-circle border m-2 " src="{{user.profile.image.url}}" alt="" width="100px">
+                    <img class="img-fluid rounded-circle border m-2 " src="{% static 'blog/images/default.png'%}" alt="" width="100px">
                 {% endif%}
             {% endif%}
             <div class="mt-5"> 
