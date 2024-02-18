@@ -7,7 +7,6 @@
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{user_form|crispy}}
-        {{profile_form|crispy}}
         <input class="btn btn-secondary mt-4" type="submit" value="تعديل">
     </form>
 </div>
