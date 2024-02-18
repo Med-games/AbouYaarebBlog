@@ -39,7 +39,7 @@ def register(request):
                 #fail_silently=False,
             #)
 
-            return redirect('login')
+            return redirect('/')
 
     else:
         form = UserCreationForms()
@@ -62,13 +62,13 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return render(request,'user/logout.html',{'title':'تسجيل الخروج',
-                                              })
+    return redirect('/')
+
 @login_required(login_url='login')
 def profile(request):
     posts=Post.objects.filter(author=request.user)
     post_list=Post.objects.filter(author=request.user)
-    paginator=Paginator(post_list,2)
+    paginator=Paginator(post_list,10)
     page=request.GET.get('page')
     try:
         post_list=paginator.page(page)

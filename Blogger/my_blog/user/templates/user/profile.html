@@ -11,7 +11,11 @@
 <div class="border p-4 mb-5">
     <div class="row">
         <div class="col-md-3 text-center">
-            <img class="img-fluid rounded-circle border m-2 " src="{{user.profile.image.url}}" alt="" width="100px">
+            {% if user.is_authenticated %}
+                {% if  user.email == 'abu-yaareb@moudawna.com' %}
+                    <img class="img-fluid rounded-circle border m-2 " src="{{user.profile.image.url}}" alt="" width="100px">
+                {% endif%}
+            {% endif%}
             <div class="mt-5"> 
                 <a href="{% url 'profile_update' %}" class="btn btn-secondary bg-secondary "><i class="fas fa-pen fa-xs"></i> تحرير</a>
             </div>
