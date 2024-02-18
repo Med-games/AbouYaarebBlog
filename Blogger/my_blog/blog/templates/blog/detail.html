@@ -82,7 +82,6 @@
             .then(response => response.json())
             .then(data => {
                 // if the user has liked the post, change the icon to fa-saved 
-                console.log(data.liked)
                 if(data.liked) {
                     document.getElementById('like_button').innerHTML = '<i class="fa-solid fa-bookmark"></i>'
                 } else {
