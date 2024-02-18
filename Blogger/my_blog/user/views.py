@@ -69,6 +69,8 @@ def profile(request):
     posts=Post.objects.filter(author=request.user)
     post_list=Post.objects.filter(author=request.user)
     paginator=Paginator(post_list,10)
+    #get liked posts
+    liked = [i for i in Post.objects.all() if i.likes.filter(id=request.user.id)]
     page=request.GET.get('page')
     try:
         post_list=paginator.page(page)
@@ -80,6 +82,7 @@ def profile(request):
         'title':'الملف الشخصي',
         'posts':posts,
         'page':page,
+        'liked':liked,
         'post_list':post_list,
      })
 @login_required(login_url='login')

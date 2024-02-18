@@ -29,6 +29,7 @@
     </div>
 </div>
 <div class="row  mb-5">
+    {% if  user.email == 'abu-yaareb@moudawna.com' %}
     <div class="col-md">
         <h4 class="bg-secondary text-center p-4 text-light"> عدد التدوينات {{posts.count}}</h4>
         <h3 class="border-bottom mb-4 pb-3 mt-5"> تدويناتي</h3>
@@ -40,9 +41,21 @@
         <h4>  لا يوجد تدوينات</h4>
         {% endfor %}
         {% include 'blog/pagination.html' with page=post_list %}
-
-
-
     </div>
+    {% else %}
+    <div class="col-md">
+        <h4 class="bg-secondary text-center p-4 text-light"> عدد التدوينات {{liked.count}}</h4>
+        <h3 class="border-bottom mb-4 pb-3 mt-5"> تدويناتي</h3>
+        {% for post in liked%}
+        <ul class="pr-2">
+            <a href="{% url 'detail' post.id  %}" class="text-dark">{{ post.title }}</a>
+        </ul>
+        {% empty %}
+        <h4>  لا يوجد تدوينات</h4>
+        {% endfor %}
+        {% include 'blog/pagination.html' with page=liked %}
+    </div>
+    {% endif%}
+
 </div>
 {% endblock %}

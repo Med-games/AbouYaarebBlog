@@ -12,19 +12,21 @@ from django.urls import resolve
 def like_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
     user = request.user
-
+    liked = False
     # Check if the user has already liked the post
     if user in post.likes.all():
         # If the user has already liked the post, remove their like
         post.likes.remove(user)
+        liked = False
     else:
         # If the user hasn't liked the post, add their like
         post.likes.add(user)
+        liked = True
     # Get the updated total likes count
     total_likes = post.likes.count()
 
     # Return JSON response with the updated total likes count
-    return JsonResponse({'total_likes': total_likes})
+    return JsonResponse({'total_likes': total_likes, 'liked': liked})
 
 def video_list(request):
     current_page = resolve(request.path_info).url_name     
