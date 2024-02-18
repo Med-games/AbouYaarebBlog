@@ -113,7 +113,11 @@ def create_post_via_view(request):
 
                     # Create an instance of the form with the provided data
                     form = PostCreateForm(data)
-
+                    #check if the post alraedy exist
+                    post = Post.objects.filter(title=title).first()
+                    if post:    
+                        #ignore the post if it already exist
+                        continue   
                     # Check if the form is valid
                     if form.is_valid():
                         # Create a Post instance but don't save it yet
