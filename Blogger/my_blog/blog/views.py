@@ -31,7 +31,7 @@ def like_view(request, pk):
 def video_list(request):
     current_page = resolve(request.path_info).url_name     
     videos = video.objects.all()
-    paginator = Paginator(videos, 5)
+    paginator = Paginator(videos, 2)
     page = request.GET.get('page', 1)  # Default to page 1 if not specified
     form = VideoCreateForm()
 
