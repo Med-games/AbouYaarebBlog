@@ -21,10 +21,14 @@
     <div class="embed-responsive embed-responsive-21by9 mb-3 mt-4 pb-1">
         {% video item.url 'small' %}
     </div>
+    {% if  user.email == 'abu-yaareb@moudawna.com' %}
+
     <form method="POST" action="{% url 'delete_video' item.id %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
+        <button type="submit" class="btn btn-danger">حذف</button>
     </form>
+    {% endif %}
+
 {% endfor %}
     </div>
     {% include 'blog/pagination.html' with page=videos %}
