@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import Post,video
 from .forms import NewComment,PostCreateForm,VideoCreateForm
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
@@ -9,32 +9,39 @@ from django.http import JsonResponse,HttpResponseRedirect
 from django.urls import reverse 
 import csv
 from django.urls import resolve
+def delete_video(request, video_id):
+    video_instance = get_object_or_404(video, pk=video_id)
+    if request.method == 'POST':
+        video_instance.delete()
+    return redirect('video')
 def like_view(request, pk):
     post = get_object_or_404(Post, pk=pk)
     user = request.user
     liked = False
-    # Check if the user has already liked the post
     if user in post.likes.all():
-        # If the user has already liked the post, remove their like
         post.likes.remove(user)
         liked = False
     else:
-        # If the user hasn't liked the post, add their like
         post.likes.add(user)
         liked = True
-    # Get the updated total likes count
     total_likes = post.likes.count()
 
-    # Return JSON response with the updated total likes count
     return JsonResponse({'total_likes': total_likes, 'liked': liked})
 
 def video_list(request):
-    current_page = resolve(request.path_info).url_name     
+    if request.method == 'POST': 
+        form = VideoCreateForm(request.POST) 
+        if form.is_valid():  
+            form.save()  
+            
+            return redirect('video')  
+    else:
+        form = VideoCreateForm()  
+
+    current_page = resolve(request.path_info).url_name
     videos = video.objects.all()
     paginator = Paginator(videos, 2)
-    page = request.GET.get('page', 1)  # Default to page 1 if not specified
-    form = VideoCreateForm()
-
+    page = request.GET.get('page', 1)  
     try:
         videos = paginator.page(page)
     except PageNotAnInteger:
@@ -43,10 +50,10 @@ def video_list(request):
         videos = paginator.page(paginator.num_pages)
 
     context = {
-        'title' : 'فيديوهات',
+        'title': 'فيديوهات',
         'videos': videos,
         'form': form,
-        'current_page':current_page,
+        'current_page': current_page,
     }
 
     return render(request, 'blog/video.html', context)

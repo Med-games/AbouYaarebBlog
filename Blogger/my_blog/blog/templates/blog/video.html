@@ -17,13 +17,15 @@
         {% endif %}
         <h3 class="border-bottom ">لقاءات البروفيسور أبو يعرب </h3>
         {% for item in videos %}
-        <h3 class="text-dark title-of-title mb-3">         {{item.title}}
-        </h3>
-            <div class="embed-responsive embed-responsive-21by9 mb-3 mt-4 pb-1">
-                {% video item.url 'small' %}
-            </div>  
-        
-        {% endfor %}
+    <h3 class="text-dark title-of-title mb-3">{{ item.title }}</h3>
+    <div class="embed-responsive embed-responsive-21by9 mb-3 mt-4 pb-1">
+        {% video item.url 'small' %}
+    </div>
+    <form method="POST" action="{% url 'delete_video' item.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+{% endfor %}
     </div>
     {% include 'blog/pagination.html' with page=videos %}
 
