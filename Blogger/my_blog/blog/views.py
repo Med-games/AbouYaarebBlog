@@ -33,13 +33,21 @@ def video_list(request):
         form = VideoCreateForm(request.POST) 
         if form.is_valid():  
             form.save()  
-            
             return redirect('video')  
     else:
         form = VideoCreateForm()  
 
     current_page = resolve(request.path_info).url_name
+    
+    # Fetch all videos
     videos = video.objects.all()
+
+    # Handle search by video title
+    video_title_search = request.GET.get('video_title_search')
+    if video_title_search:
+        videos = [video for video in videos if video.title.lower().find(video_title_search.lower()) != -1]
+
+    # Pagination
     paginator = Paginator(videos, 2)
     page = request.GET.get('page', 1)  
     try:
@@ -59,7 +67,7 @@ def video_list(request):
     return render(request, 'blog/video.html', context)
 def home(request):
     current_page = resolve(request.path_info).url_name     
-    query = request.GET.get('post_search')
+    query = request.GET.get('video_title_search')
     posts = Post.objects.all()
     if query:
         posts = posts.filter(Q(title__icontains=query) | Q(content__icontains=query))
