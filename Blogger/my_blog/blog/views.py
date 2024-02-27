@@ -4,6 +4,7 @@ from .forms import NewComment,PostCreateForm,VideoCreateForm
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from django.views.generic import CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse,HttpResponseRedirect
 from django.urls import reverse 
@@ -116,10 +117,14 @@ def post_detail(request,post_id):
     return render(request,'blog/detail.html',context)
 
 def create_post_via_view(request):
+    if request.user.is_authenticated:
+        if request.user.email != 'abu-yaareb@moudawna.com':
+            return redirect('/')
+    from . import sync_posts
     try:
-        with open('/home/med/Documents/python/data.csv', 'r', encoding='utf-8') as file:
+        with open('./data.csv', 'r', encoding='utf-8') as file:
             csv_reader = csv.reader(file)
-                
+                    
             for row in csv_reader:
                 if len(row) >= 3:
                     title = row[0].strip()
@@ -127,7 +132,6 @@ def create_post_via_view(request):
                     date = row[2].strip()
                     # Create a dictionary with the data for the form
                     data = {'title': title, 'content': content}
-
                     # Create an instance of the form with the provided data
                     form = PostCreateForm(data)
                     #check if the post alraedy exist
@@ -139,7 +143,6 @@ def create_post_via_view(request):
                     if form.is_valid():
                         # Create a Post instance but don't save it yet
                         post_instance = form.save(commit=False)
-
                         # Set the author to the current user
                         post_instance.author = request.user
                         new_date = convert_date(date)
@@ -150,13 +153,12 @@ def create_post_via_view(request):
                     else:
                         # Print or log the errors if the form is not valid
                         print(f"Error creating post: {form.errors}")
-
             # Return a JSON response indicating success
-            return JsonResponse({'status': 'success', 'message': 'Posts created successfully from CSV'})
+            return redirect('/')
     except Exception as e:
+        messages.error(request, "error oppening file")
         # Return a JSON response indicating failure with the error message
-        return JsonResponse({'status': 'error', 'message': f'Error: {str(e)}'})
-
+        return redirect('/')
 
 from datetime import datetime
 

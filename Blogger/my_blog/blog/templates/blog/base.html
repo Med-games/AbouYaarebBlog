@@ -82,6 +82,7 @@
               <ul class="navbar-nav mr-auto">
                 {% if  user.email == 'abu-yaareb@moudawna.com' %}
                 <li class="nav-item"> <a href="{% url 'new_post'  %}" class='nav-link btn btn-info m-3 text-light'>تدوينة جديدة</a></li>
+                <li class="nav-item"> <a href="{% url 'create_post' %}"  class='nav-link  btn btn-info m-3 text-light'>تحديث التدوينات</a></li>
                 {% endif%}
                 <li class="nav-item"> <a href="{% url 'profile' %}"  class='nav-link  btn btn-info m-3 text-light'>الملف الشخصي </a></li>
                 <li class="nav-item"> <a href="{% url 'logout' %}"  class='nav-link btn btn-danger m-3 text-light'> تسجيل الخروج </a></li>
@@ -160,11 +161,6 @@
                  </div>
             </div>
         </div>
-  <!-- Add the form for creating a post -->
-  <!--<form method="post" action="{% url 'create_post' %}">
-    {% csrf_token %}
-    <button type="submit">Create Post</button>
-    </form>-->
     </footer>
         <script src="{% static 'blog/js/jquery-3.3.1.slim.min.js' %}"></script>
         <script src="{% static 'blog/js/popper.min.js' %}"></script>
