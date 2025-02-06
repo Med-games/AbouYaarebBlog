@@ -17,7 +17,7 @@ for i in range(1,2):
         # Parse the HTML content using BeautifulSoup
         soup = BeautifulSoup(response.content, "html.parser")
         # Find the blog posts on the page
-        blog_urls = [h2.find('a')['href'] for h2 in soup.find_all('h2', class_='post-title')]
+        blog_urls = [h2.find('a')['href'] for h2 in soup.find_all('h2', class_='post-box-title')]
         # Process the blog posts
         for url in blog_urls:
             response = requests.get(url)
