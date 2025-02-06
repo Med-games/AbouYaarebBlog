@@ -25,12 +25,12 @@ for i in range(1,2):
             # Extract relevant information from each blog post
 
             title = post.find("h1",class_='post-title entry-title').get_text()
-            content = post.find('div', class_='entry-content entry clearfix')
+            content = post.find('div', class_='entry')
             updated_content = re.sub(r'<p[^>]*>\s*<a\b[^>]*>.*', '', str(content))
             updated_content = re.sub(r'<aside.*', '', str(updated_content))
             updated_content = re.sub(r'<span class="tagcloud">\s*<a.*?</span>', '', str(updated_content))
             
-            date = post.find('span', class_='date meta-item tie-icon').get_text()
+            date = post.find('span', class_='tie-date').get_text()
             titles.append(title)
             contents.append(updated_content)
             dates.append(date)
