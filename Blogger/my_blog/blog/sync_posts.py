@@ -8,7 +8,7 @@ dates = []
 import re
 
 # Send a GET request to the blog site
-for i in range(1,2):
+for i in range(1,5):
     url = "https://tadwinet.net/tag/%d8%a3%d8%a8%d9%88-%d9%8a%d8%b9%d8%b1%d8%a8-%d8%a7%d9%84%d9%85%d8%b1%d8%b2%d9%88%d9%82%d9%8a/page/"+str(i)+"/"  # Replace with the actual blog site URL
 
     response = requests.get(url)
@@ -24,12 +24,15 @@ for i in range(1,2):
             post = BeautifulSoup(response.content, "html.parser")
             # Extract relevant information from each blog post
 
-            title = post.find("h1",class_='post-title entry-title').get_text()
+            title = post.find("h1",class_='name post-title entry-title').get_text()
             content = post.find('div', class_='entry')
             updated_content = re.sub(r'<p[^>]*>\s*<a\b[^>]*>.*', '', str(content))
             updated_content = re.sub(r'<aside.*', '', str(updated_content))
             updated_content = re.sub(r'<span class="tagcloud">\s*<a.*?</span>', '', str(updated_content))
-            
+            updated_content = re.sub(r'</p><p id="subscribe-submit">', '', str(updated_content))
+            updated_content = re.sub(r'كتابة بريدك الإلكتروني...', '', str(updated_content))
+            updated_content = re.sub(r'اشتراك', '', str(updated_content))
+
             date = post.find('span', class_='tie-date').get_text()
             titles.append(title)
             contents.append(updated_content)
